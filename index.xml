@@ -93,7 +93,7 @@ FSphere &lt;span style=&#34;color:#008b45&#34;&gt;CascadeSphere&lt;/span&gt;(Vie
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这种做法比直接根据八个顶点求中点然后取最大半径（一把梭的方式，我的最爱）的构建方式得到的包围球半径要小一点。&lt;/p&gt;
 &lt;p&gt;Emmm，最终，问题找到了，我接下来着手把UE4的阴影相机Bounds构建方式改成了Fit To View Scene的方式（这是什么鬼方式？）。命名有点奇怪，因为我既按照Fit To View的方式构建了当前级联的视锥体，再在当前级联视锥体内构建所有Shadow Caster的Combine Bounds，最终根据原来的视锥体Bounds和后来的Shadow Caster Combine Bounds做半径比较，返回半径小的那个，这样，在投影体少的场景中，既可以利用Fit To Scene充分切合投影的优势，又可以在投影体多的场景中利用Fit To View的高利用率优势。&lt;/p&gt;
 &lt;p&gt;我这里的修改实际上把 Fit To View 和 Fit To Scene都算了一遍，性能有点吃不消，profile时显示在骁龙660上每帧多花了0.12ms的cpu时间。&lt;/p&gt;
-&lt;p&gt;然后15、16号游缘项目组准备搬家，这两天也是无心工作。16号下午美术部这边就剩下我一个人了，临近下班的时候正好引擎编译通过了，在RenderDoc里面测试了一切正常，现在Shadow Map利用率非常的高。&lt;/p&gt;
+&lt;p&gt;然后15、16号项目组准备搬家，这两天也是无心工作。16号下午美术部这边就剩下我一个人了，临近下班的时候正好引擎编译通过了，在RenderDoc里面测试了一切正常，现在Shadow Map利用率非常的高。&lt;/p&gt;
 &lt;p&gt;另外，当场景中投影体Bounds小，但是距离离得比较远时，原始的Combine操作导致Bounds增长速度非常的快，而远处的Caster实际上并不重要，加入一个根据相机视点距离和Caster Bounds大小作为权重的有偏Combine可以有效解决这个问题。&lt;/p&gt;
 &lt;p&gt;最后，对于选角、角色展示等场景，Caster很少时，我直接根据整个场景的Caster bounds来构建投影矩阵，连视锥构建都省了，快捷方便。XD。&lt;/p&gt;
 - https://honghuafu.github.io/post/%E8%99%9A%E5%B9%BB%E5%BC%95%E6%93%8E/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BA%A7%E8%81%94%E9%98%B4%E5%BD%B1shadowmap%E4%BD%BF%E7%94%A8%E7%8E%87%E8%BF%87%E4%BD%8E%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D/ - copyright.</description>
