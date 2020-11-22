@@ -4,17 +4,17 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Categories - 月光下的旅行。</title>
+	<title>虚幻引擎4.22手机添加一次Z-PrePass - 月光下的旅行。</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="">
+	<meta name="description" content="UE4.22移动端添加一次Z-PrePass">
 	<meta name="generator" content="Hugo 0.78.1" />
-	<meta property="og:title" content="Categories" />
-<meta property="og:description" content="Everything About Render." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://honghuafu.github.io/categories/" />
-<meta property="og:updated_time" content="2020-11-18T00:00:00+00:00" />
+	<meta property="og:title" content="虚幻引擎4.22手机添加一次Z-PrePass" />
+<meta property="og:description" content="UE4.22移动端添加一次Z-PrePass" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://honghuafu.github.io/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B7%BB%E5%8A%A0%E4%B8%80%E6%AC%A1z-prepass/" />
+<meta property="article:published_time" content="2020-10-21T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-10-21T00:00:00+00:00" />
 
-	<link rel="alternate" type="application/rss+xml" href="/categories/index.xml" title="月光下的旅行。">
 	<link rel="stylesheet" href="/css/style.css">
 	
 	<link rel="shortcut icon" href="/favicon.ico">
@@ -55,67 +55,57 @@
 		<div class="wrapper flex">
 			<div class="primary">
 			
-<main class="main list" role="main">
-	<header class="main__header">
-		<h1 class="main__title">Categories</h1>
-	</header><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/categories/ue4/" rel="bookmark">
-			UE4
-			</a>
-		</h3>
-		<div class="list__meta meta">
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">虚幻引擎4.22手机添加一次Z-PrePass</h1>
+			<div class="post__meta meta">
 <div class="meta__item-datetime meta__item">
 	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-11-18T00:00:00">2020-11-18</time>
+	<time class="meta__text" datetime="2020-10-21T00:00:00">2020-10-21</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/ue4" rel="category">UE4</a></span>
 </div>
 </div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
+		</header><div class="content post__content clearfix">
+			<p>得益于UE4 MeshDrawCommand架构的优良设计，为引擎渲染管线添加一个Pass变得非常的简单。在看完虚幻官方给出的文档后，我开始修改Mobile的渲染管线，原本以为需要自己定义一套Mesh Collector流程，自己写一遍shader binding，却发现引擎的Defferd管线的PrePass非常适合做这个，这节省了我大量的时间，我只需要额外注册一个Mobile的 PrePass就可以在BuildMeshDrawCommand中收集PrePass需要的一切信息，在MobileShadingRender中在MobileBasePass之前插入一次，一切都搞定了，最后再针对美术的使用体验修改一下编辑器界面，就完事了，非常的简单粗暴。</p>
+<p>实际上为Mobile添加一个PrePass一个下午就弄完了，接下来的一个星期时间都是在打包测试（不是划水，因为打包实在太慢了，一天基本只能测3-4个包这样子），放在RenderDoc中测了一下，DrawCall多了近50%，但时间却整体减少了 5 - 6 ms。在材质复杂程度更高时，优化会更加明显。</p>
+<p>另外，PrePass的Early-Z优化在低端机上更加明显，低端机的View Distance比较近，小件物体没有渲染，额外的drawcall数并不多，提升能达到惊人的10-12ms(也许是我们之前的优化做得太渣了)。</p>
+<p>开启了PrePass后，注意Z Func的切换，Base Pass使用 Z-Equal能节省近15%的时间，原因在于 Z-Equal开启时，Mask材质在片元着色器之前的深度测试中直接可以测试了，无须采样Mask贴图来确定哪一部分为镂空。</p>
+<p>PrePass 在低端机的Z-Test可能会出现问题：在使用了world position offset选项的材质中出现闪烁现象。这是因为 物体使用了时间驱动的顶点动画，在渲染PrePass时输入的时间 != 渲染BasePass时输入的时间，Z-Test Equal 实际上并不等，于是出现闪烁，目前还没有比较好的解决办法，除非调整美术的动画时间精度，我暂时把它给屏蔽了。</p>
+<p>最后，主动给角色、大地形的Material Blend Mode切换为Mask，可以让它们参与到 Mask Only PrePass的流程中，最大程度减少DrawCall同时减少Overdraw。</p>
+<p>注：我发现UE4.25已经看到PrePass添加到移动管线上去了，不过它是 Mask Only的，并且目前这个特性并没有放出来。在未来的版本可能会有吧。</p>
+
+		</div>
 		
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/categories/c&#43;&#43;/" rel="bookmark">
-			C&#43;&#43;
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-11-09T00:00:00">2020-11-09</time>
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/" rel="tag">实时渲染</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/ue4/" rel="tag">UE4</a></li>
+	</ul>
 </div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		
-	</div>
-</article><article class="list__item post">
-	<header class="list__header">
-		<h3 class="list__title post__title ">
-			<a href="/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/" rel="bookmark">
-			实时渲染开发
-			</a>
-		</h3>
-		<div class="list__meta meta">
-<div class="meta__item-datetime meta__item">
-	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
-	<time class="meta__text" datetime="2020-09-26T00:00:00">2020-09-26</time>
-</div>
-</div>
-	</header>
-	<div class="content list__excerpt post__content clearfix">
-		
-	</div>
-</article>
+	</article>
 </main>
 
 
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BA%A7%E8%81%94%E9%98%B4%E5%BD%B1shadowmap%E4%BD%BF%E7%94%A8%E7%8E%87%E8%BF%87%E4%BD%8E%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">虚幻4移动端级联阴影ShadowMap使用率过低问题修复</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">现代C&#43;&#43;Lambda入门</p></a>
+	</div>
+</nav>
+
+<div id="gitalk-container"></div>
+
+
 			</div>
-			
-<aside class="sidebar"><div class="widget-search widget">
+			<aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
 			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
@@ -171,4 +161,16 @@
 </footer>
 	</div>
 <script async defer src="/js/menu.js"></script></body>
+<script>
+var gitalk = new Gitalk({
+  clientID: "",
+  clientSecret: "511dc07757d2bf979d74ada3ac634e7db8a53319 ",
+  repo: "HongHuaFu.github.io",
+  owner: "honghuafu",
+  admin: ["honghuafu"],
+  id: md5(encodeURI(location.href))
+})
+gitalk.render('gitalk-container')
+</script>
+
 </html>

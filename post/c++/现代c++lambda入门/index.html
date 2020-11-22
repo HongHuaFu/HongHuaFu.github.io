@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="no-js" lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>现代C&#43;&#43;Lambda入门 - 月光下的旅行。</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="现代C&#43;&#43;Lambda入门">
+	<meta name="generator" content="Hugo 0.78.1" />
+	<meta property="og:title" content="现代C&#43;&#43;Lambda入门" />
+<meta property="og:description" content="现代C&#43;&#43;Lambda入门" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/" />
+<meta property="article:published_time" content="2020-11-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-11-09T00:00:00+00:00" />
+
+	<link rel="stylesheet" href="/css/style.css">
+	
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link rel="stylesheet" href="/css/gitalk.css">
+	<script src="/js/gitalk.min.js"></script>
+	<script src="/js/md5.min.js"></script>
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="月光下的旅行。" rel="home">
+				<div class="logo__title">月光下的旅行。</div>
+				<div class="logo__tagline">Everything About Render.</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/ue4">UE4</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91">实时渲染开发</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/c&#43;&#43;">C&#43;&#43;</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">现代C&#43;&#43;Lambda入门</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-11-09T00:00:00">2020-11-09</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/c&#43;&#43;" rel="category">C&#43;&#43;</a></span>
+</div>
+</div>
+		</header><div class="content post__content clearfix">
+			<p>微软家的开源代码里经常可以看到Lambda函数的使用踪迹。不考虑其它复杂的情况，直接将Lambda视作为函数内部包装的一个函数算子，用完就丢掉，性能开销基本为零。</p>
+<p>C++ Lambda函数式格式如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">[ captures ] ( params ) <span style="color:#f92672">-&gt;</span> ret { body }
+[ captures ] ( params ) { body }
+[ captures ] { body }
+</code></pre></div><p>capture：可使用 = 或 &amp; 或缺省。它标记了Lambda函数与外部变量的交互方式。</p>
+<ol>
+<li>capture缺省时，无法使用Lambda函数外部变量。</li>
+<li>capture为 = 时，外部变量会复制构造一份临时变量供Lambda调用。</li>
+<li>capture为 &amp; 时，外部变量作为引用传入Lambda中，在lambda函数内部对外部变量所作的修改都会作用到外部变量上。</li>
+</ol>
+<p>实际上，=号类似C++的值变量，&amp;为引用变量。</p>
+<p>params为该lambda函数的函数参数。-&gt;ret 为返回类型，有时可以缺省（自动类型推导成功时）。</p>
+<p>一个简单的Lambda函数：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+    <span style="color:#66d9ef">auto</span> f <span style="color:#f92672">=</span> [](<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> i <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>){ cout <span style="color:#f92672">&lt;&lt;</span> i <span style="color:#f92672">&lt;&lt;</span> endl; };
+
+    f();
+    f(<span style="color:#e6db74">&#34;world&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>如果使用capture来使用外部的变量：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+    string hello <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;origin&#34;</span>;
+    <span style="color:#66d9ef">auto</span> f <span style="color:#f92672">=</span> [<span style="color:#f92672">=</span>](<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> i <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>){ hello <span style="color:#f92672">=</span> i.c_str();cout <span style="color:#f92672">&lt;&lt;</span> hello <span style="color:#f92672">&lt;&lt;</span>endl; }; <span style="color:#75715e">// error
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> f1 <span style="color:#f92672">=</span> [<span style="color:#f92672">&amp;</span>](<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> i <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>){ hello <span style="color:#f92672">=</span> i.c_str();cout <span style="color:#f92672">&lt;&lt;</span> hello <span style="color:#f92672">&lt;&lt;</span>endl; }; <span style="color:#75715e">// right
+</span><span style="color:#75715e"></span>
+    f();
+    f(<span style="color:#e6db74">&#34;world&#34;</span>);
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>可以看到，VS C++将 capture为=的变量传入时添加了const限定符，从而杜绝了在lambda中给外部变量赋值的操作。</p>
+<p>当然，如果非要将它视为一个临时变量在lambda内部使用，可以使用mutable关键字，不过函数外部原本的变量还是不会变化的。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#66d9ef">auto</span> f <span style="color:#f92672">=</span> [<span style="color:#f92672">=</span>](<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> i <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>) <span style="color:#66d9ef">mutable</span> { hello <span style="color:#f92672">=</span> i.c_str();cout <span style="color:#f92672">&lt;&lt;</span> hello <span style="color:#f92672">&lt;&lt;</span>endl; }; <span style="color:#75715e">// right
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">auto</span> f1 <span style="color:#f92672">=</span> [<span style="color:#f92672">=</span>](<span style="color:#66d9ef">const</span> string<span style="color:#f92672">&amp;</span> i <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hello&#34;</span>){ hello <span style="color:#f92672">=</span> i.c_str();cout <span style="color:#f92672">&lt;&lt;</span> hello <span style="color:#f92672">&lt;&lt;</span>endl; }; <span style="color:#75715e">// error
+</span></code></pre></div><p>最后，lambda可以配合auto关键字，实现模板函数类似的功能：</p>
+<pre><code>auto Add = [](auto a,auto b){ return a + b;};
+auto ret = Add(1.2f,1);
+</code></pre>
+		</div>
+		
+<div class="post__tags tags clearfix">
+	<svg class="icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/c&#43;&#43;/" rel="tag">C&#43;&#43;</a></li>
+	</ul>
+</div>
+	</article>
+</main>
+
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B7%BB%E5%8A%A0%E4%B8%80%E6%AC%A1z-prepass/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">虚幻引擎4.22手机添加一次Z-PrePass</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/post/ue4/ue4.22%E7%9A%84%E5%BC%B1%E9%B8%A1umg-textblock%E6%B8%B2%E6%9F%93/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">UE4.22的弱鸡UMG TextBlock渲染</p></a>
+	</div>
+</nav>
+
+<div id="gitalk-container"></div>
+
+
+			</div>
+			<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/ue4/ue4.22-%E9%92%88%E5%AF%B9%E6%8D%8F%E8%84%B8%E7%9A%84shadowmap%E6%8A%95%E5%BD%B1%E5%8C%85%E5%9B%B4%E7%9B%92%E7%AE%97%E6%B3%95%E5%86%8D%E6%94%B9%E8%BF%9B/">虚幻4捏脸的ShadowMap投影包围盒算法再改进</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B0grabpass%E6%8A%93%E5%B1%8F/">虚幻4.22移动端实现GrabPass抓屏</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/ue4/ue4.22%E7%9A%84%E5%BC%B1%E9%B8%A1umg-textblock%E6%B8%B2%E6%9F%93/">UE4.22的弱鸡UMG TextBlock渲染</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/">现代C&#43;&#43;Lambda入门</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B7%BB%E5%8A%A0%E4%B8%80%E6%AC%A1z-prepass/">虚幻引擎4.22手机添加一次Z-PrePass</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BA%A7%E8%81%94%E9%98%B4%E5%BD%B1shadowmap%E4%BD%BF%E7%94%A8%E7%8E%87%E8%BF%87%E4%BD%8E%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D/">虚幻4移动端级联阴影ShadowMap使用率过低问题修复</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/substance-painter%E4%B8%8Eue4%E9%85%8D%E5%A5%97shader/">Substance Painter Shader与UE4移动端渲染效果同步</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E4%B8%9D%E7%BB%B8%E5%A4%B4%E5%8F%91%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7%E6%9D%90%E8%B4%A8%E6%B8%B2%E6%9F%93%E4%B8%8E%E7%BE%8E%E6%9C%AF%E5%88%B6%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">各向异性材质渲染与美术流程注意事项</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E7%AE%80%E6%98%93%E7%BF%BB%E9%A1%B5%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/">简单翻页效果</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/categories/c&#43;&#43;">C&#43;&#43;</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/ue4">Ue4</a></li>
+			<li class="widget__item"><a class="widget__link" href="/categories/%e5%ae%9e%e6%97%b6%e6%b8%b2%e6%9f%93%e5%bc%80%e5%8f%91">实时渲染开发</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/c&#43;&#43;" title="C&#43;&#43;">C&#43;&#43; (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ue4" title="Ue4">Ue4 (5)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/%e5%ae%9e%e6%97%b6%e6%b8%b2%e6%9f%93" title="实时渲染">实时渲染 (8)</a>
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 月光下的旅行。.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.<a href="" rel="nofollow noopener" target="_blank\">.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script></body>
+<script>
+var gitalk = new Gitalk({
+  clientID: "",
+  clientSecret: "511dc07757d2bf979d74ada3ac634e7db8a53319 ",
+  repo: "HongHuaFu.github.io",
+  owner: "honghuafu",
+  admin: ["honghuafu"],
+  id: md5(encodeURI(location.href))
+})
+gitalk.render('gitalk-container')
+</script>
+
+</html>

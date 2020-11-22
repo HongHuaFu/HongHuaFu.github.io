@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 月光下的旅行。</title>
-    <link>https://honghuafu.github.io/post/</link>
-    <description>Recent content in Posts on 月光下的旅行。</description>
+    <title>实时渲染 on 月光下的旅行。</title>
+    <link>https://honghuafu.github.io/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/</link>
+    <description>Recent content in 实时渲染 on 月光下的旅行。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 18 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://honghuafu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://honghuafu.github.io/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>虚幻4捏脸的ShadowMap投影包围盒算法再改进</title>
       <link>https://honghuafu.github.io/post/ue4/ue4.22-%E9%92%88%E5%AF%B9%E6%8D%8F%E8%84%B8%E7%9A%84shadowmap%E6%8A%95%E5%BD%B1%E5%8C%85%E5%9B%B4%E7%9B%92%E7%AE%97%E6%B3%95%E5%86%8D%E6%94%B9%E8%BF%9B/</link>
@@ -32,15 +32,6 @@
       
       <guid>https://honghuafu.github.io/post/ue4/ue4.22%E7%9A%84%E5%BC%B1%E9%B8%A1umg-textblock%E6%B8%B2%E6%9F%93/</guid>
       <description>今天因为工作的原因抽空看了一下UE4引擎的UMG渲染部分，意外的发现它的字体渲染部分是非常的弱鸡，完全配不上UE4高大上名号。 虽然描边材质、</description>
-    </item>
-    
-    <item>
-      <title>现代C&#43;&#43;Lambda入门</title>
-      <link>https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</link>
-      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</guid>
-      <description>微软家的开源代码里经常可以看到Lambda函数的使用踪迹。不考虑其它复杂的情况，直接将Lambda视作为函数内部包装的一个函数算子，用完就丢</description>
     </item>
     
     <item>

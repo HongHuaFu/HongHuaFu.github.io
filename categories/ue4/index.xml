@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on 月光下的旅行。</title>
-    <link>https://honghuafu.github.io/post/</link>
-    <description>Recent content in Posts on 月光下的旅行。</description>
+    <title>UE4 on 月光下的旅行。</title>
+    <link>https://honghuafu.github.io/categories/ue4/</link>
+    <description>Recent content in UE4 on 月光下的旅行。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 18 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://honghuafu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 18 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://honghuafu.github.io/categories/ue4/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>虚幻4捏脸的ShadowMap投影包围盒算法再改进</title>
       <link>https://honghuafu.github.io/post/ue4/ue4.22-%E9%92%88%E5%AF%B9%E6%8D%8F%E8%84%B8%E7%9A%84shadowmap%E6%8A%95%E5%BD%B1%E5%8C%85%E5%9B%B4%E7%9B%92%E7%AE%97%E6%B3%95%E5%86%8D%E6%94%B9%E8%BF%9B/</link>
@@ -35,15 +35,6 @@
     </item>
     
     <item>
-      <title>现代C&#43;&#43;Lambda入门</title>
-      <link>https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</link>
-      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</guid>
-      <description>微软家的开源代码里经常可以看到Lambda函数的使用踪迹。不考虑其它复杂的情况，直接将Lambda视作为函数内部包装的一个函数算子，用完就丢</description>
-    </item>
-    
-    <item>
       <title>虚幻引擎4.22手机添加一次Z-PrePass</title>
       <link>https://honghuafu.github.io/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%B7%BB%E5%8A%A0%E4%B8%80%E6%AC%A1z-prepass/</link>
       <pubDate>Wed, 21 Oct 2020 00:00:00 +0000</pubDate>
@@ -59,33 +50,6 @@
       
       <guid>https://honghuafu.github.io/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BA%A7%E8%81%94%E9%98%B4%E5%BD%B1shadowmap%E4%BD%BF%E7%94%A8%E7%8E%87%E8%BF%87%E4%BD%8E%E9%97%AE%E9%A2%98%E4%BF%AE%E5%A4%8D/</guid>
       <description>在微软家的这篇 [Common Techniques to Improve Shadow Depth Maps]文章中，详细讨论Shadow Map的各种问题和解决方案，里面的摩尔纹、Peter Pan、抗锯齿等常规问题</description>
-    </item>
-    
-    <item>
-      <title>Substance Painter Shader与UE4移动端渲染效果同步</title>
-      <link>https://honghuafu.github.io/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/substance-painter%E4%B8%8Eue4%E9%85%8D%E5%A5%97shader/</link>
-      <pubDate>Sat, 26 Sep 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://honghuafu.github.io/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/substance-painter%E4%B8%8Eue4%E9%85%8D%E5%A5%97shader/</guid>
-      <description>要为UE4项目编写SP的Shader，首先得把MobileBasePassXXX.usf翻出来。然后将通用的直射光 漫反射+ 高光 + Skylight + IBL全</description>
-    </item>
-    
-    <item>
-      <title>各向异性材质渲染与美术流程注意事项</title>
-      <link>https://honghuafu.github.io/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E4%B8%9D%E7%BB%B8%E5%A4%B4%E5%8F%91%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7%E6%9D%90%E8%B4%A8%E6%B8%B2%E6%9F%93%E4%B8%8E%E7%BE%8E%E6%9C%AF%E5%88%B6%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</link>
-      <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://honghuafu.github.io/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E4%B8%9D%E7%BB%B8%E5%A4%B4%E5%8F%91%E5%90%84%E5%90%91%E5%BC%82%E6%80%A7%E6%9D%90%E8%B4%A8%E6%B8%B2%E6%9F%93%E4%B8%8E%E7%BE%8E%E6%9C%AF%E5%88%B6%E4%BD%9C%E6%B5%81%E7%A8%8B%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</guid>
-      <description>原理 丝绸、头发这些各项异性材质，它们的高光部分计算使用的是各向异性方式。当然实时渲染里不可能像离线渲染里那样去积分计算，游戏中大部分都是用切</description>
-    </item>
-    
-    <item>
-      <title>简单翻页效果</title>
-      <link>https://honghuafu.github.io/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E7%AE%80%E6%98%93%E7%BF%BB%E9%A1%B5%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/</link>
-      <pubDate>Fri, 03 Jul 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://honghuafu.github.io/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E7%AE%80%E6%98%93%E7%BF%BB%E9%A1%B5%E6%95%88%E6%9E%9C%E5%AE%9E%E7%8E%B0/</guid>
-      <description>翻页效果主要分为顶点着色器动画和UI遮罩动画。我简单的在Unity上分别实现这两个，然后移植到UE4上面去。 顶点着色器动画 顶点着色器实现实际</description>
     </item>
     
   </channel>
