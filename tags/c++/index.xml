@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>C&#43;&#43; on 月光下的旅行。</title>
-    <link>https://honghuafu.github.io/tags/c&#43;&#43;/</link>
+    <link>/tags/c&#43;&#43;/</link>
     <description>Recent content in C&#43;&#43; on 月光下的旅行。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 09 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://honghuafu.github.io/tags/c++/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 09 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/tags/c++/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>现代C&#43;&#43;Lambda入门</title>
-      <link>https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</link>
+      <link>/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</link>
       <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://honghuafu.github.io/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</guid>
+      <guid>/post/c&#43;&#43;/%E7%8E%B0%E4%BB%A3c&#43;&#43;lambda%E5%85%A5%E9%97%A8/</guid>
       <description>微软家的开源代码里经常可以看到Lambda函数的使用踪迹。不考虑其它复杂的情况，直接将Lambda视作为函数内部包装的一个函数算子，用完就丢</description>
     </item>
     

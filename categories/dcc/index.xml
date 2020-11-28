@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>DCC on 月光下的旅行。</title>
+    <link>/categories/dcc/</link>
+    <description>Recent content in DCC on 月光下的旅行。</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 09 Jun 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/dcc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3dsMax视口shader与unity同步</title>
+      <link>/post/ddc/3dsmax%E8%A7%86%E5%8F%A3shader%E4%B8%8Eunity%E5%90%8C%E6%AD%A5/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/ddc/3dsmax%E8%A7%86%E5%8F%A3shader%E4%B8%8Eunity%E5%90%8C%E6%AD%A5/</guid>
+      <description>首先给出链接：https://github.com/HongHuaFu/Unity-3dsMax-ShaderSamples Max,Maya</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -2,35 +2,44 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on 月光下的旅行。</title>
-    <link>https://honghuafu.github.io/categories/</link>
+    <link>/categories/</link>
     <description>Recent content in Categories on 月光下的旅行。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Wed, 18 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://honghuafu.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>UE4</title>
-      <link>https://honghuafu.github.io/categories/ue4/</link>
-      <pubDate>Wed, 18 Nov 2020 00:00:00 +0000</pubDate>
+      <link>/categories/ue4/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://honghuafu.github.io/categories/ue4/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>C&#43;&#43;</title>
-      <link>https://honghuafu.github.io/categories/c&#43;&#43;/</link>
-      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://honghuafu.github.io/categories/c&#43;&#43;/</guid>
+      <guid>/categories/ue4/</guid>
       <description></description>
     </item>
     
     <item>
       <title>实时渲染开发</title>
-      <link>https://honghuafu.github.io/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/</link>
-      <pubDate>Sat, 26 Sep 2020 00:00:00 +0000</pubDate>
+      <link>/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/</link>
+      <pubDate>Thu, 26 Nov 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://honghuafu.github.io/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/</guid>
+      <guid>/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43;</title>
+      <link>/categories/c&#43;&#43;/</link>
+      <pubDate>Mon, 09 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/c&#43;&#43;/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>DCC</title>
+      <link>/categories/dcc/</link>
+      <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/dcc/</guid>
       <description></description>
     </item>
     
