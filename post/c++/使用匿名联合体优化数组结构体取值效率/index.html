@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta property="og:title" content=" 使用匿名联合体优化数组结构体取值效率 &middot;  月光下的旅行。" />
+  <meta property="og:site_name" content="月光下的旅行。" />
+  <meta property="og:url" content="/post/c&#43;&#43;/%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E8%81%94%E5%90%88%E4%BD%93%E4%BC%98%E5%8C%96%E6%95%B0%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E5%80%BC%E6%95%88%E7%8E%87/" />
+  <meta name="theme" content="darksimplicity">
+  <meta name="generator" content="Hugo 0.78.1" />
+  
+  
+  <base href="/">
+  <title> 使用匿名联合体优化数组结构体取值效率 &middot;  月光下的旅行。</title>
+  <link rel="stylesheet" href="/css/style.min.css">
+
+</head>
+<body>
+  <header>
+      <nav role="top-nav">
+          <ul class="navbar-list">
+            
+          </ul>
+      </nav>
+      <br />
+      <h1><a href="/" class="title">月光下的旅行。</a>
+        <span class="title-description">&nbsp;&nbsp;|&nbsp;&nbsp;<i>Everything About Rendering.</i>
+          </span>
+      </h1>
+  </header>
+  <main>
+      <article itemscope itemtype="http://schema.org/Blog">
+        <h3><a class="post-title-link" href="/post/c&#43;&#43;/%E4%BD%BF%E7%94%A8%E5%8C%BF%E5%90%8D%E8%81%94%E5%90%88%E4%BD%93%E4%BC%98%E5%8C%96%E6%95%B0%E7%BB%84%E7%BB%93%E6%9E%84%E4%BD%93%E5%8F%96%E5%80%BC%E6%95%88%E7%8E%87/">使用匿名联合体优化数组结构体取值效率</a></h3>
+        
+            <div class="tags">类别: &nbsp;
+              <span itemprop="keywords"><a class="tag-link" href="/tags/c&#43;&#43;" rel="tag">C&#43;&#43; </a>
+              </span>
+          </div>
+          <div class="content-full"><p>在设计数学库的时候，比如写一个Vector3类型的时候，为了方便，常常把类内值写为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vector3</span>
+{
+    T x,y,z;
+}
+</code></pre></div><p>这样子外部就可以直接下标获取了。</p>
+<p>但是标准的数学库像glm，hlsl它们，vector的取值，xyz或者rgb或者uvw都是可以使用的。</p>
+<p>因此实际上可以设置为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vector3</span>
+{
+    <span style="color:#66d9ef">union</span>
+	{
+		<span style="color:#66d9ef">struct</span>{ T x, y, z; };
+		<span style="color:#66d9ef">struct</span>{ T r, g, b; };
+		<span style="color:#66d9ef">struct</span>{ T u, v, w; };
+    };
+}
+</code></pre></div><p>C++的联合体可以保证它们使用同一份内存，但有不同的别名，并且初始化时只需要初始化一份即可。</p>
+<p>有时需要数组取值，则可以写为：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">template</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">T</span><span style="color:#f92672">&gt;</span>
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Vector3</span>
+{
+    <span style="color:#66d9ef">union</span>
+	{
+        std<span style="color:#f92672">::</span>array<span style="color:#f92672">&lt;</span>T,<span style="color:#ae81ff">3</span><span style="color:#f92672">&gt;</span> data;
+		<span style="color:#66d9ef">struct</span>{ T x, y, z; };
+		<span style="color:#66d9ef">struct</span>{ T r, g, b; };
+		<span style="color:#66d9ef">struct</span>{ T u, v, w; };
+    };
+}
+
+<span style="color:#75715e">// ...
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">// Usage: 
+</span><span style="color:#75715e"></span>Vector a; 
+a.data[i];
+</code></pre></div>
+</div>
+      </article>
+  </main>
+  <footer>
+      <div class="copyright"><p>&copy; 2020. 月光下的旅行。. All rights reserved. </div>    
+
+  </footer>
+</body>
+</html>
+

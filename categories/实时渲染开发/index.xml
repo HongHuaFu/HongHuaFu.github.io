@@ -6,7 +6,25 @@
     <description>Recent content in 实时渲染开发 on 月光下的旅行。</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 26 Nov 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 13 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="/categories/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>移动端树叶SSS效果制作</title>
+      <link>/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A0%91%E5%8F%B6sss%E6%95%88%E6%9E%9C%E5%88%B6%E4%BD%9C/</link>
+      <pubDate>Sun, 13 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A0%91%E5%8F%B6sss%E6%95%88%E6%9E%9C%E5%88%B6%E4%BD%9C/</guid>
+      <description>移动端渲染树叶时，出于性能考虑，会使用插片方法来节省性能，并且为了避开Overdraw，经常插片数很少，这导致树叶的光影感出不来。换言之，插</description>
+    </item>
+    
+    <item>
+      <title>地形纹理拼接混合实现更多的地形细节</title>
+      <link>/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E5%9C%B0%E5%9B%BE%E7%BA%B9%E7%90%86%E6%8B%BC%E6%8E%A5%E6%B7%B7%E5%90%88%E5%AE%9E%E7%8E%B0%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%9C%B0%E5%BD%A2%E7%BB%86%E8%8A%82/</link>
+      <pubDate>Sun, 06 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/%E5%9C%B0%E5%9B%BE%E7%BA%B9%E7%90%86%E6%8B%BC%E6%8E%A5%E6%B7%B7%E5%90%88%E5%AE%9E%E7%8E%B0%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%9C%B0%E5%BD%A2%E7%BB%86%E8%8A%82/</guid>
+      <description>把多个地形纹理合并成图集，渲染时采样对应索引混合，可以做到减少带宽消耗的同时实现丰富的地形纹理混合细节。 其实这是GPU Pro2上详细分享的老</description>
+    </item>
+    
     <item>
       <title>UE4卡通渲染尝试</title>
       <link>/post/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93%E5%BC%80%E5%8F%91/ue4%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E5%B0%9D%E8%AF%95/</link>

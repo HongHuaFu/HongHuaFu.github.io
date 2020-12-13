@@ -40,7 +40,7 @@
       <pubDate>Fri, 13 Nov 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/ue4/ue4.22%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%AE%9E%E7%8E%B0grabpass%E6%8A%93%E5%B1%8F/</guid>
-      <description>最近几天在给UE4.22加上GrabPass这个功能，主要问题还是UE4移动端内部管线的折射太过操蛋（滔哥说的），折射材质在后处理阶段单独渲</description>
+      <description>最近几天在给UE4.22加上GrabPass这个功能。 目前UE4折射材质在后处理阶段单独渲染一次扭曲VectorPass，然后再和Scene</description>
     </item>
     
     <item>
