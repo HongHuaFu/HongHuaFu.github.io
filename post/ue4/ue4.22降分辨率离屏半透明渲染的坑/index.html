@@ -36,6 +36,21 @@
               <span itemprop="keywords"><a class="tag-link" href="/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93" rel="tag">实时渲染 </a><a class="tag-link" href="/tags/ue4" rel="tag">UE4 </a>
               </span>
           </div>
+        
+      <span>写于</span>
+                  <a>
+                    <time datetime="2020-11-23T00:00:00Z">
+                    2020年11月23日</time>
+                </a>
+                  &nbsp;
+
+          
+              <span>文本夹是</span>
+                  <a href="/categories/">[UE4]</a>
+                  &nbsp;
+          
+      </div>
+
           <div class="content-full"><p>上周着力于降分辨率离屏渲染，为啥是“降分辨率离屏半透明渲染”而不是“降分辨率离屏特效渲染”呢？因为根本没办法解决半透明排序的问题。离屏就意味着需要打断Render Pass，如果特效单独渲染在一个render texture上，其他的半透明物体渲染在Sence Color上渲染，因为半透明没有记录深度和透明度（除非单独开一个RT来存储这些信息，但成本提高了），所以没有办法在合成的时候解决深度冲突问题，因此，必须在同一个Pass中按深度顺序渲染所有的半透明物体。</p>
 <p>因此，离屏特效变成了离屏半透明，但英伟达他们在GPU Gems chapter-23-high-speed-screen-particles中称为离屏特效，不知道他们怎么解决的这个问题233。</p>
 <p>其实一路开发过来感觉还挺顺畅的，目前只需要考虑HDR情况，因此离屏渲染只需要向GRenderTargets额外申请一张16位的 HDR RGBA RT 和一个没有MSAA的 Depth RT。</p>

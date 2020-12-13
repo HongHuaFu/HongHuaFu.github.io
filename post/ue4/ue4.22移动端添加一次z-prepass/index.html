@@ -36,6 +36,21 @@
               <span itemprop="keywords"><a class="tag-link" href="/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93" rel="tag">实时渲染 </a><a class="tag-link" href="/tags/ue4" rel="tag">UE4 </a>
               </span>
           </div>
+        
+      <span>写于</span>
+                  <a>
+                    <time datetime="2020-10-21T00:00:00Z">
+                    2020年10月21日</time>
+                </a>
+                  &nbsp;
+
+          
+              <span>文本夹是</span>
+                  <a href="/categories/">[UE4]</a>
+                  &nbsp;
+          
+      </div>
+
           <div class="content-full"><p>得益于UE4 MeshDrawCommand架构的优良设计，为引擎渲染管线添加一个Pass变得非常的简单。在看完虚幻官方给出的文档后，我开始修改Mobile的渲染管线，原本以为需要自己定义一套Mesh Collector流程，自己写一遍shader binding，却发现引擎的Defferd管线的PrePass非常适合做这个，这节省了我大量的时间，我只需要额外注册一个Mobile的 PrePass就可以在BuildMeshDrawCommand中收集PrePass需要的一切信息，在MobileShadingRender中在MobileBasePass之前插入一次，一切都搞定了，最后再针对美术的使用体验修改一下编辑器界面，就完事了，非常的简单粗暴。</p>
 <p>实际上为Mobile添加一个PrePass一个下午就弄完了，接下来的一个星期时间都是在打包测试，放在RenderDoc中测了一下，DrawCall多了近50%，但时间却整体减少了 5 - 6 ms。在材质复杂程度更高时，优化会更加明显。</p>
 <p>另外，PrePass的Early-Z优化在低端机上更加明显，低端机的View Distance比较近，小件物体没有渲染，额外的drawcall数并不多，提升能达到惊人的10-12ms(也许是我们之前的优化做得太渣了)。</p>

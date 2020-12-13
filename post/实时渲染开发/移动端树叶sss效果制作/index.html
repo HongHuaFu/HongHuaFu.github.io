@@ -36,6 +36,21 @@
               <span itemprop="keywords"><a class="tag-link" href="/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93" rel="tag">实时渲染 </a><a class="tag-link" href="/tags/dcc" rel="tag">DCC </a>
               </span>
           </div>
+        
+      <span>写于</span>
+                  <a>
+                    <time datetime="2020-12-13T00:00:00Z">
+                    2020年12月13日</time>
+                </a>
+                  &nbsp;
+
+          
+              <span>文本夹是</span>
+                  <a href="/categories/">[实时渲染开发]</a>
+                  &nbsp;
+          
+      </div>
+
           <div class="content-full"><p>移动端渲染树叶时，出于性能考虑，会使用插片方法来节省性能，并且为了避开Overdraw，经常插片数很少，这导致树叶的光影感出不来。换言之，插片树缺少了许多高频的几何细节，没有办法直接计算透视SSS效果。</p>
 <p>因此，在SpeedTree这种专业造树软件中，会额外计算一项高频的几何环境光遮蔽系数存到顶点色的r通道中，导入UE4时，可以将其作为AO项参与透射部分的计算。</p>
 <p><img src="/images/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A0%91%E5%8F%B6SSS%E6%95%88%E6%9E%9C%E5%88%B6%E4%BD%9C.assets/image-20201213104237318.png" alt="image-20201213104237318"></p>

@@ -36,6 +36,21 @@
               <span itemprop="keywords"><a class="tag-link" href="/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93" rel="tag">实时渲染 </a><a class="tag-link" href="/tags/ue4" rel="tag">UE4 </a>
               </span>
           </div>
+        
+      <span>写于</span>
+                  <a>
+                    <time datetime="2020-11-18T00:00:00Z">
+                    2020年11月18日</time>
+                </a>
+                  &nbsp;
+
+          
+              <span>文本夹是</span>
+                  <a href="/categories/">[UE4]</a>
+                  &nbsp;
+          
+      </div>
+
           <div class="content-full"><p>在之前的ShadowMap投影矩阵包围球构造方式改成Fit To Scene后，很好的满足了少量角色投影展示的渲染需求：</p>
 <p><img src="/images/%E6%8D%8F%E8%84%B8%E7%9A%84ShadowMap%E6%8A%95%E5%BD%B1%E5%8C%85%E5%9B%B4%E7%9B%92/image-20201122112254087.png" alt="Image"></p>
 <p>左边原生的阴影投影特意把Dynamic Shadow Movable Distance调到最小情况，恰好没有Shadow Cut的情况（当前视角的最小值），但投影Bounds还是因为太大直接跑到屏幕外了233。</p>

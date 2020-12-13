@@ -36,6 +36,21 @@
               <span itemprop="keywords"><a class="tag-link" href="/tags/%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93" rel="tag">实时渲染 </a><a class="tag-link" href="/tags/ue4" rel="tag">UE4 </a>
               </span>
           </div>
+        
+      <span>写于</span>
+                  <a>
+                    <time datetime="2020-10-17T00:00:00Z">
+                    2020年10月17日</time>
+                </a>
+                  &nbsp;
+
+          
+              <span>文本夹是</span>
+                  <a href="/categories/">[UE4]</a>
+                  &nbsp;
+          
+      </div>
+
           <div class="content-full"><p>在微软家的这篇 [<a href="https://docs.microsoft.com/zh-tw/windows/win32/dxtecharts/common-techniques-to-improve-shadow-depth-maps?redirectedfrom=MSDN">Common Techniques to Improve Shadow Depth Maps</a>]文章中，详细讨论Shadow Map的各种问题和解决方案，里面的摩尔纹、Peter Pan、抗锯齿等常规问题都有着详细的解决方案。在简述Shadow Camera Setup的时候，他们简单提了下Shadow Camera Fit To Scene和Fit To View的两种做法，而这两种做法区别，对ShadowMap的利用率影响非常的大。</p>
 <p>UE4内部的阴影解决方案很多，不过移动端能用上的就只有CSM。为了兼顾移动端的性能表现，设置CSM的数目 = 1就够用了，这时候的CSM实际上和单纯的Project ShadowMap算法没啥太大区别了，但是CSM数目设置为1时，UE4的阴影显得非常的淡，在人物角色上阴影表现得非常的轻浮，没有色彩感官上体现的厚重感，层次感也没体现出来，大场景时感觉还好。在人物特写的角色展示界面，这阴影质量根本不够用，emm，我记得我第一天搬下来游缘的时候滔哥就跟我说UE的阴影有问题，不过那时啥都不会天天划水（当然现在也啥都不会天天划水），过了好几个月都不想动这个阴影，直到最近几天有空了于是安排时间来解决这个问题。</p>
 <p>国庆放假回来后就开始着手解决这些问题，修改这部分的源码，一共花了大概四天时间来看引擎的CSM部分的源码，我一开始的重心是放在了阴影相机的投影矩阵构建函数上，在那里折腾了好久吧，实际上也没啥收获，不过后来在微软家的DX12 Samples里发现了Mesh Viewer实例工程，里面的Sponza阴影贴图蛮好的。而微软他们家构建投影矩阵的方式和UE4也一样，唯一不同的就是相机视锥包围盒的构建方式不同，微软他们家是写死了的。UE4使用了Fit To View的方式。</p>
