@@ -51,12 +51,36 @@
           
       </div>
 
-          <div class="content-full"><p>移动端渲染树叶时，出于性能考虑，会使用插片方法来节省性能，并且为了避开Overdraw，经常插片数很少，这导致树叶的光影感出不来。换言之，插片树缺少了许多高频的几何细节，没有办法直接计算透视SSS效果。</p>
+          <div class="content-full"><p>UE4内置了双面植被渲染的ShadingModel，内部使用了TwoSidedBxDF的专门BxDF方程：</p>
+<pre><code>FDirectLighting TwoSidedBxDF( FGBufferData GBuffer, half3 N, half3 V, half3 L, float Falloff, float NoL, FAreaLight AreaLight, FShadowTerms Shadow )
+{
+	FDirectLighting Lighting = DefaultLitBxDF( GBuffer, N, V, L, Falloff, NoL, AreaLight, Shadow );
+
+	float3 SubsurfaceColor = ExtractSubsurfaceColor(GBuffer);
+
+	// http://blog.stevemcauley.com/2011/12/03/energy-conserving-wrapped-diffuse/
+	float Wrap = 0.5;
+	float WrapNoL = saturate( ( -dot(N, L) + Wrap ) / Square( 1 + Wrap ) );
+
+	// Scatter distribution
+	float VoL = dot(V, L);
+	float Scatter = D_GGX( 0.6*0.6, saturate( -VoL ) );
+
+	Lighting.Transmission = AreaLight.FalloffColor * (Falloff * WrapNoL * Scatter) * SubsurfaceColor;
+
+	return Lighting;
+}
+</code></pre><p>这种Wrap式的BxDF（比如Half-Lambert）会在背光部分添加适当的补光，而不是完全变黑，比较忠实的还原了光线在叶子间传递的衰减情况。</p>
+<p>通常情况下Wrap式光照模型会过亮（能量不守恒），导致与周围的其它遵循能量守恒的PBR着色模型亮度不统一（在环境中显得格格不入，美术风格不统一），技术美术被迫放出更多的着色细节参数，让美术细调以达到着色风格统一。</p>
+<p>这实际上是风格化PBR必然会遇到的问题，也是比较重要的问题，风格化的PBR会对特殊的材质，各向异性如：丝绸、头发，SSS类型如：玉石、皮肤，特殊环境材质如：河流、湖面、海面、冰、沙子等，对这些特殊的材质设计单独的Shading Model，很难确保所有的ShadingModel都遵循能量守恒，同时也很难确保所有的着色细节亮度统一。</p>
+<p>我认为之前所在的项目也有类似的问题，我们修改了很多着色相关的细节，做了很多风格化的处理，但并没有确保所有的着色模型（比如水），都遵循最基本的能量守恒。</p>
+<p>文章（http://blog.stevemcauley.com/2011/12/03/energy-conserving-wrapped-diffuse/）给出了基于能量衰减的 Warp BxDF，可以和周围的PBR着色模型很好的融合在一起。</p>
+<p>另外全局光的球谐光也是很重要的一项，树叶计算球谐光时使用反向的法向量，它会带来很细腻的光影变化。</p>
+<p>移动端渲染树叶时，出于性能考虑，会使用插片方法来节省性能，并且为了避开Overdraw，经常插片数很少，这导致树叶的光影感出不来。换言之，插片树缺少了许多高频的几何细节，没有办法直接计算透视SSS效果。</p>
 <p>因此，在SpeedTree这种专业造树软件中，会额外计算一项高频的几何环境光遮蔽系数存到顶点色的r通道中，导入UE4时，可以将其作为AO项参与透射部分的计算。</p>
 <p><img src="/images/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A0%91%E5%8F%B6SSS%E6%95%88%E6%9E%9C%E5%88%B6%E4%BD%9C.assets/image-20201213104237318.png" alt="image-20201213104237318"></p>
 <p>另外，houdini的GameLab工具中也提供了计算顶点AO的工具。</p>
-<p>UE4内部的透射计算，实际上只是将法线取反，再进行一次间接光照的漫反射计算而已233。</p>
-<p>单纯使用AO顶点色是出不来对比强烈的SSS效果的，还需要和光照贴图配合加深过渡。</p>
+<p>单纯使用AO顶点色是出不来对比强烈的SSS效果的，还需要和光照贴图（阴影贴图）配合加深过渡。</p>
 <p>光照贴图的烘焙也比较重要，直接使用原生的法线容易烘焙出死黑，需要改一下树的法线，而单纯的球形法线过渡在复杂结构的树上光影过渡单调，并不合适。</p>
 <p>在育碧的分享中使用的是近似包围体来转移法线：</p>
 <p><img src="/images/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%A0%91%E5%8F%B6SSS%E6%95%88%E6%9E%9C%E5%88%B6%E4%BD%9C.assets/image-20201213104356043.png" alt="image-20201213104356043"></p>
